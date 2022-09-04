@@ -1,5 +1,6 @@
 version: "3.9"
 services:
+  # nextjs-appを起動
   app:
     build: .
     volumes:
@@ -7,3 +8,15 @@ services:
     ports:
       - "3000:3000"
     command: bash -c "npm run dev"
+  db:
+    # posgre公式のimage利用
+    image: postgres:14.2
+    # DBへの変更を永続化するためのボリュームのマウント
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    # .env読み込み
+    env_file:
+      - .env
+    # posgreへの接続(default 5432)
+    ports:
+      - "5432:5432"
